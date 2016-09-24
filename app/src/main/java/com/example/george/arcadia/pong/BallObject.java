@@ -76,21 +76,7 @@ public class BallObject extends GameObject {
         dx = dx * (-1);
     }
 
-    protected void update(){
-        /*if(dir_x == DIR.PLUS){
-            x_pos += dx;
-        }
-        else if(dir_x == DIR.MINUS){
-            x_pos -= dx;
-        }
-
-        if(dir_y == DIR.PLUS){
-            y_pos += dy;
-        }
-        else if(dir_y == DIR.MINUS){
-            y_pos -= dy;
-        }*/
-
+    public void update(){
         y_pos += dy;
         x_pos += dx;
         ball = new Rect(x_pos, y_pos, x_pos+RADIUS, y_pos+RADIUS);

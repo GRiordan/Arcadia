@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -19,25 +21,38 @@ import android.widget.Toast;
  */
 
 public class PongView extends SurfaceView implements SurfaceHolder.Callback {
-    private GameThread thread;
     private Context context;
     private PongActivity parent;
+    private SurfaceHolder holder;
+    private GameLogic logic;
+    private Handler handler;
+    private GameState state;
+    private Paint paint;
 
     public PongView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-
+        handler = new Handler();
         //So we can listen for events...
-        SurfaceHolder holder = getHolder();
-        holder.addCallback(this);
-        setFocusable(true);
+        holder  = getHolder();
+        state = new GameState(context);
+        paint = new Paint();
 
-        //and instantiate the thread
-        thread = new GameThread(holder, context, new Handler(), this);
+        init();
+    }
+
+    public void init(){
+        System.out.println("Here");
+        handler.removeCallbacks(gameThread);
+        handler.postDelayed(gameThread, 2000);
+    }
+
+    public void setLogic(GameLogic logic){
+        this.logic = logic;
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        return thread.getGameState().motionDetected(event);
+        return logic.motionDetected(event, state);
     }
 
 
@@ -52,7 +67,11 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback {
     //Implemented as part of the SurfaceHolder.Callback interface
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        thread.start();
+        this.holder = holder;
+        parent.setHolder(holder);
+        parent.setGameState(state);
+        holder.addCallback(this);
+        setFocusable(true);
     }
 
     //Implemented as part of the SurfaceHolder.Callback interface
@@ -60,12 +79,37 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceDestroyed(SurfaceHolder holder) {
     }
 
+    public SurfaceHolder getHolder2(){
+        return holder;
+    }
+
     public void setParent(PongActivity parent){
         this.parent = parent;
     }
 
     public void displayWinDialog(String winner){
-        thread.interrupt();
         parent.displayWinDialogFragment(winner);
     }
+
+    private Runnable gameThread = new Runnable() {
+
+        public void run() {
+
+            if (state.getWinner() == null) {
+                Canvas canvas = holder.lockCanvas();
+                logic.update(state);
+                logic.checkWinCond(state);
+                logic.draw(canvas, paint, state);
+                holder.unlockCanvasAndPost(canvas);
+                handler.postDelayed(this, 1);
+            } else {
+                PaddleObject.TYPE winner = state.getWinner();
+                if (winner == PaddleObject.TYPE.PLAYER) {
+                    displayWinDialog("Player");
+                } else {
+                    displayWinDialog("Enemy");
+                }
+            }
+        }
+    };
 }
