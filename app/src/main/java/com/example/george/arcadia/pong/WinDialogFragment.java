@@ -8,8 +8,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 
-import com.example.george.arcadia.MainActivity;
+import com.example.george.arcadia.MenuActivity;
 
 /**
  * Created by George on 24/09/2016.
@@ -34,7 +35,7 @@ public class WinDialogFragment extends DialogFragment {
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(context, MainActivity.class);
+                        Intent intent = new Intent(context, MenuActivity.class);
                         startActivity(intent);
                     }
                 });

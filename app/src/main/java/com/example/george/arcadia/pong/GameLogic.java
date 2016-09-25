@@ -2,11 +2,14 @@ package com.example.george.arcadia.pong;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+
+import com.example.george.arcadia.R;
 
 /**
  * Created by George on 25/09/2016.
@@ -71,12 +74,12 @@ public class GameLogic {
     public void draw(Canvas canvas, Paint paint, GameState state) {
 
         //Clear the screen
-        canvas.drawRGB(20, 20, 20);
+        canvas.drawColor(Color.parseColor("#FFFFFF"));
+        //canvas.drawRGB(20, 20, 20);
 
         //set the colour
         //paint.setColor();
-        paint.setARGB(200, 0, 200, 0);
-
+        paint.setColor( Color.parseColor("#FF5722"));
         //draw the ball
         canvas.drawRect(state.getBall().getRect(), paint);
 

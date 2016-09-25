@@ -91,11 +91,19 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback {
         parent.displayWinDialogFragment(winner);
     }
 
+    public boolean stopThread(){
+        state.setWinner(PaddleObject.TYPE.NONE);
+        return true;
+    }
+
     private Runnable gameThread = new Runnable() {
 
         public void run() {
 
-            if (state.getWinner() == null) {
+            if(state.getWinner() == PaddleObject.TYPE.NONE){
+
+            }
+            else if (state.getWinner() == null) {
                 Canvas canvas = holder.lockCanvas();
                 logic.update(state);
                 logic.checkWinCond(state);
@@ -105,9 +113,9 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback {
             } else {
                 PaddleObject.TYPE winner = state.getWinner();
                 if (winner == PaddleObject.TYPE.PLAYER) {
-                    displayWinDialog("Player");
-                } else {
                     displayWinDialog("Enemy");
+                } else {
+                    displayWinDialog("Player");
                 }
             }
         }

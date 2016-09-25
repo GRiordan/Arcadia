@@ -59,8 +59,8 @@ public class GameState {
         enemy.setType(PaddleObject.TYPE.ENEMY);
         player.setType(PaddleObject.TYPE.PLAYER);
 
-        enemyPoints = 2;
-        playerPoints = 2;
+        enemyPoints = 3;
+        playerPoints = 3;
     }
 
     public void reset(){
@@ -80,7 +80,6 @@ public class GameState {
     }
 
     public void updateBallDXDY(int dx, int dy){
-        System.out.println("here " + dx + " " + dy);
         ball.setDXDY(dx,dy);
     }
 

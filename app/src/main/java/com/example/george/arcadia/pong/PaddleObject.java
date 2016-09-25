@@ -12,7 +12,7 @@ import android.graphics.drawable.shapes.Shape;
 public class PaddleObject extends GameObject {
 
     public enum TYPE {
-        PLAYER, ENEMY
+        PLAYER, ENEMY, NONE
     }
 
     private TYPE type;
