@@ -65,11 +65,11 @@ public class PaddleObject extends GameObject {
     }
 
     public void moveTowards(int x){
-        if(x < x_pos){
-            x_pos -= 6;
+        if(x <= x_pos){
+            x_pos -= 5;
         }
         else if(x > x_pos){
-            x_pos += 6;
+            x_pos += 5;
         }
         paddle = new Rect(x_pos, y_pos, x_pos+WIDTH, y_pos+HEIGHT);
     }

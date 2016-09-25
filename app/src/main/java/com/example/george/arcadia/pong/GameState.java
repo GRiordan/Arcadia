@@ -36,9 +36,7 @@ public class GameState {
     private int playerPoints;
     private PaddleObject.TYPE winner;
 
-    private final int SPEED = 10;
-    private final double MAXANGLE = Math.toRadians(75.0);
-    private final int PADDLEHEIGHT = 300;
+    private final int PADDLEHEIGHT = 330;
 
     public GameState(Context context){
         this.context = context;
